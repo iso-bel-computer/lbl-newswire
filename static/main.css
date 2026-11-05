@@ -56,7 +56,7 @@ nav {
     text-decoration: none;
 }
 
-.category:hover {
+.category:hover, .category:focus {
     opacity: 0.8;
 }
 .category.selected {

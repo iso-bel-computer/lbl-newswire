@@ -197,7 +197,6 @@
                 if (article) {
                     const textarea = article.el.querySelector('textarea')
                     textarea.value = note
-                    textarea.tabindex = '1'
                 }
             })
 
@@ -356,6 +355,7 @@
             tableContainer.addEventListener('keydown', (e) => {
                 if (e.target.tagName === 'TR' ) {
                     const tr = e.target.closest('tr')
+                    console.log(e.key)
                     switch (e.key) {
                         case "p":
                         case "P":
@@ -391,6 +391,10 @@
                             e.target.querySelector('.hide').click()
                             neighbour.focus()
                             break
+                        case "/":
+                            e.preventDefault()
+                            document.getElementById('articleSearch').focus()
+                            break
                         case "ArrowDown":
                             e.preventDefault()
                             neighbour = tr.nextElementSibling
@@ -411,6 +415,11 @@
                             e.preventDefault()
                             e.target.querySelector('a.title').click()
 
+                    }
+                }
+                else if (e.target.tagName === 'TEXTAREA') {
+                    if (e.key === 'Escape') {
+                        e.target.closest('tr').focus()
                     }
                 }
             })
