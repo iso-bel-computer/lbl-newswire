@@ -3,8 +3,12 @@ import json
 from datetime import datetime, timedelta, date
 from urllib.parse import quote
 import sqlite3
+from pathlib import Path
+
 
 app = Flask(__name__)
+BASE_DIR = Path(__file__).resolve().parent
+DB_PATH = BASE_DIR / "data" / "articles.db"
 
 @app.template_global()
 def format_date(y, m, d):
@@ -101,7 +105,7 @@ def dashboard():
         if not category:
                 category = 'all'
 
-        sqliteConnection = sqlite3.connect("./data/articles.db")
+        sqliteConnection = sqlite3.connect(DB_PATH)
         sqliteConnection.row_factory = sqlite3.Row
         cursor = sqliteConnection.cursor()
 
