@@ -15,7 +15,7 @@ def scrape(page, scraper):
         itemData = {
             "title": item.find('h2'),
             "description": '',
-            "url": 'https://www.insidehousing.co.uk' + item.find('a', href=True)['href'],
+            "url": item.find('a', href=True)['href'],
             "category": scraper['category'],
             "source": scraper["name"],
             "date": item.select_one('span[class*="aos-ArticleDate"]')

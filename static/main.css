@@ -41,15 +41,14 @@ nav {
 
 .category {
     background-color: #fafafa;
-    padding: 6px;
+    padding: 9px;
     padding-bottom: 1px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     font-size: 0.7em;
     opacity: 0.6;
     color: black ;
     text-decoration: none;
-
 }
 
 .category:hover {
@@ -74,6 +73,7 @@ nav {
     border-right: 1px dotted black;
     min-width: 80vw;
     max-width: 80vw;
+    border-left: 1px  dotted hsl(0 0% 0% / 0.3)
 
 }
 
@@ -85,11 +85,10 @@ table {
  #tableContainer table tr {
     border-top : 1px dotted hsl(0 0% 0% / 0);
     border-bottom: 1px dotted hsl(0 0% 0% / 0.2);
-    border-left: 1px  dotted hsl(0 0% 0% / 0.3)
 }
 
  #tableContainer table tr:hover {
-    background-color: #dbdbdb;
+    background-color: #dbdbdb60;
 }
 
 #tableContainer table td {
@@ -109,22 +108,24 @@ table {
 
 td.article {
     padding-left: 15px;
-    max-width: 65vw;
-    min-width: 65vw;
+    max-width: 62vw;
+    min-width: 62vw;
     overflow: hidden;
+    border-left: 1px dotted black;
 }
 
 td.article p {
     margin: 0px;
     margin-bottom: 8px;
     margin-top: 2px;
-    max-width: 800px;
+    max-width: 600px;
 }
 
 td a.title {
     color: black;
     font-weight: bold;
     font-size: 1.1em;
+    max-width: 500px;
 
 }
 
@@ -134,6 +135,7 @@ tr.not_relevant {
 
 tr.very_relevant {
     background-color: #cdd8c599 !important;
+    border-left: 2px solid #99d699 !important;
 }
 tr.very_relevant .pin {
     filter: saturate(100%) !important;
@@ -141,18 +143,18 @@ tr.very_relevant .pin {
 
 tr.recent {
     background-color: #f3c3c322;
-    border-left: 2px solid red
+    border-left: 2px solid #eea0a0;
 }
 
 td.article_source {
-    min-width: 12vw;
-    max-width: 12vw;
+    min-width: 9vw;
+    max-width: 9vw;
     text-align: center;
     vertical-align: middle;
 }
 td.date {
-    min-width: 8vw;
-    max-width: 8vw;
+    min-width: 5vw;
+    max-width: 5vw;
 }
 button {
 
@@ -172,11 +174,15 @@ button {
     padding: 5px;
     border-radius: 0px;
     border: 1px solid black;
-    margin: 5px;
     background-color: white;
+    margin-bottom: 3px;
     width: 100%;
 }
 
+#controlsContainer.noresults {
+    background-color: #f3c3c380;
+
+}
 
 hr {
     width: 100%;
@@ -187,8 +193,8 @@ label {
 }
 
 .pin, .hide, .mail {
-    min-width: 1.5vw;
-    max-width: 1.5vw;
+    min-width: 2vw;
+    max-width: 2vw;
     filter: saturate(0%);
     font-size: 9px;
     cursor: pointer;
@@ -202,15 +208,17 @@ label {
 }
 
 .sourceicon {
-    max-height: 2.8em;
+    max-height: 2.5em;
     width: auto;
     margin: 5px;
-    filter: saturate(80%)
+    filter: saturate(70%)
 }
 
 #controlsContainer {
+    transition: 0.1s ease-in;
 
     border-radius: 5px;
+    border: 2px inset #00000040;
     max-width:17vw;
     min-width:17vw;
     height: fit-content;
@@ -231,7 +239,12 @@ label {
 
 #sourceselection {
     width: 100%;
-    max-height: 300px;
+    max-height: 200px;
+    border-top: 1px dotted #00000060;
+    margin-top: 5px;
+    border-bottom: 1px dotted #00000060;
+    background-color: #00000010;
+    padding: 5px;
     overflow: scroll;
     display: flex;
     flex-direction: column;

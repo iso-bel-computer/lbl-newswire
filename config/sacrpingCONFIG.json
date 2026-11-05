@@ -117,5 +117,19 @@
         "category": "Charity / Think Tank",
         "url": "https://housingevidence.ac.uk/whats-happening/publications/",
         "shortname": "UKCCHE"
+    },
+    {
+        "path": "./scrapers/guardian.py",
+        "name": "Guardian - Social Housing",
+        "category": "News",
+        "url": "https://www.theguardian.com/society/social-housing",
+        "shortname": "Guardian"
+    },
+    {
+        "path": "./scrapers/centrehomelessnessimpact.py",
+        "name": "Centre for Homelessness Impact",
+        "category": "Charity / Think Tank",
+        "url": "https://www.homelessnessimpact.org/blog",
+        "shortname": "CHI"
     }
 ]

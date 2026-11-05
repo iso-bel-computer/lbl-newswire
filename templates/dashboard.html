@@ -15,11 +15,11 @@
 
 
         <nav>
-            <h4>News Monitor</h4>
+            <h4>Housing Newswire</h4>
             <div id='categoryselector'>
-                <a class='category {% if selected == "all" %}selected{% endif %}'  href='/'>All</a>
+                <a tabindex='0' class='category {% if selected == "all" %}selected{% endif %}'  href='/'>All</a>
                 {% for category in categories %}
-                <a class='category {% if selected == category[0] %}selected{% endif %}'  href='/?category={{ category[0] }}'>{{ category[0] }}</a>
+                <a tabindex='0' class='category {% if selected == category[0] %}selected{% endif %}'  href='/?category={{ category[0] }}'>{{ category[0] }}</a>
                 {% endfor %}
             </div>
         </nav>
@@ -29,13 +29,14 @@
                 <p id='numberofarticles'>-</p>
                 <hr>
                 <div >
-                    <label for='displayHidden'>Show hidden items?</label>
+                    <label for='displayHidden'>Show hidden</label>
                     <input type='checkbox' name='displayHidden' id='displayHidden'>
                 </div>
                 <div >
-                    <label for='displayPinnedOnly'>Show pinned items only?</label>
+                    <label for='displayPinnedOnly'>Show pinned only</label>
                     <input type='checkbox' name='displayPinnedOnly' id='displayPinnedOnly'>
                 </div>
+                <button id="exportWord">Export to Word</button>
                 <hr>
                 <div>
                     <label for='showHideAll'>Show / Hide all?</label>
@@ -60,7 +61,7 @@
             <div id='tableContainer'>
                 <table id='articlesTable'>
                     {% for article in articles %}
-                    <tr hidden data-link='{{ article.url }}' data-id='{{ article.article_id }}' class='{% if dateIsRecent(article.year, article.month, article.day) %}recent {% endif %}{% if article.relevance > 1.01 %}somewhat{% else %}not{% endif %}_relevant' {% if article.relevance < 1.01 %}hidden{% endif %} data-source='{{ article.source }}'>
+                    <tr tabindex=0 hidden data-link='{{ article.url }}' data-id='{{ article.article_id }}' class='{% if dateIsRecent(article.year, article.month, article.day) %}recent {% endif %}{% if article.relevance > 1.01 %}somewhat{% else %}not{% endif %}_relevant' {% if article.relevance < 1.01 %}hidden{% endif %} data-source='{{ article.source }}'>
                         <td class='pin'>📌</td>
                         <td class='hide'>❌</td>
                         <td class='mail'>📧</td>
@@ -68,19 +69,32 @@
                             <a class='title' target='_blank' href='{{ article.url }}'>
                                 {{ article.title }}
                             </a>
-                            <div class='date'> {{ format_date(article.year, article.month, article.day) }}</div>
                             <p>{{ article.summary | replace('<p>', '') | replace('</p>', '')}}</p>
+                        </td>
+                        <td class='date'>
+                             {{ format_date(article.year, article.month, article.day) }}
                         </td>
                         <td class='article_source'>
                             {% if returnIcon(article.source) %}
-                                <img class='sourceicon' src='{{ returnIcon(article.source) }}'>
+                                <img loading='lazy' class='sourceicon' src='{{ returnIcon(article.source) }}'>
                             {% else %}
                                 {{ article.source }}
                             {% endif %}
                         </td>
-
                     </tr>
                     {% endfor %}
+                    {% if articles | length < 1 %}
+                    <tr>
+                        <td class='pin'></td>
+                        <td class='hide'></td>
+                        <td class='mail'></td>
+                        <td class='article'>
+                            No results found...
+                        </td>
+                        <td class='article_source'>
+                        </td>
+                    </tr>
+                    {% endif %}
                 </table>
             </div>
             <script type='module'>
@@ -97,6 +111,7 @@
             const showhideall = document.getElementById('showHideAll')
             const searchbox = document.getElementById('articleSearch')
             const tableContainer = document.getElementById('tableContainer')
+            const controlsContainer = document.getElementById('controlsContainer')
 
             let hiddenSources = loadSavedList('hiddenSources')
 
@@ -140,6 +155,11 @@
 
                 }
                 numberofarticles.innerText = `${displayed} items.`
+                if (displayed === 0) {
+                    controlsContainer.classList.add('noresults')
+                } else if (controlsContainer.classList.contains('noresults')) {
+                    controlsContainer.classList.remove('noresults')
+                }
 
             }
 
@@ -151,7 +171,6 @@
             checkbox.addEventListener('change', applyFilters)
             pinnedbox.addEventListener('change', applyFilters)
             showhideall.addEventListener('change', () => {
-
                 sourceselection.querySelectorAll('input').forEach(checkbox => {
                     if (checkbox.checked != showhideall.checked) {
                         checkbox.click()
@@ -210,6 +229,9 @@
                 const pin  = e.target.closest('.pin')
                 const hide = e.target.closest('.hide')
                 const mail = e.target.closest('.mail')
+                const a    = e.target.closest('a')
+
+
 
                 if (pin) {
                     if (!item.pinned) {
@@ -225,8 +247,7 @@
                     localStorage.setItem("pinnedArticles", JSON.stringify(pinnedArticles))
                     applyFilters()
                 }
-
-                if (hide) {
+                else if (hide) {
                     if (!item.irrelevant) {
                         if (!irrelevantArticles.includes(item.id)) {irrelevantArticles.push(item.id)}
                         item.irrelevant = true
@@ -241,7 +262,7 @@
                     applyFilters()
                 }
 
-                if (mail) {
+                else if (mail) {
                     const url   = item.el.dataset.link
                     const title = item.el.querySelector('.title').textContent.trim()
 
@@ -253,8 +274,48 @@
                             `mailto:?body=${encodeURIComponent(title)}%20-%20${encodeURIComponent(url)}`
                     }
                 }
+                else if (a) {
+                    null // dont toggle pin if you've clicked on link
+                }
+                else {
+                    tr.focus()
+                }
             })
 
+
+            tableContainer.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'TR' ) {
+                    switch (e.key) {
+                        case "p":
+                        case "P":
+                            e.preventDefault()
+                            e.target.querySelector('.pin').click()
+                            break
+                        case "m":
+                        case "M":
+                            e.preventDefault()
+                            e.target.querySelector('.mail').click()
+                            break
+                        case "h":
+                        case "H":
+                            e.preventDefault()
+                            const tr = e.target.closest('tr')
+                            let neighbour = tr.nextElementSibling
+                            if (!checkbox.checked) { // if we're not displaying the hidden rows
+                                while (neighbour.hidden) {
+                                    neighbour = neighbour.nextElementSibling
+                                }
+                            }
+                            e.target.querySelector('.hide').click()
+                            neighbour.focus()
+                            break
+                        case "Enter":
+                            e.preventDefault()
+                            e.target.querySelector('a.title').click()
+
+                    }
+                }
+            })
 
             </script>
         </div>

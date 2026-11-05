@@ -30,7 +30,9 @@ def format_date(y, m, d):
                 return 'Today'
         if (date.today() - articledate).days < 2:
                 return 'Yesterday'
-        return f"{day} {month} {year}"
+        if (date.today().year != y):
+                return f"{day} {month} {year}"
+        return f"{day} {month}"
 
 
 @app.template_global()
@@ -72,13 +74,15 @@ def returnIcon(name):
                 "HO": "/static/icons/ombudsman.png",
                 "Inside Housing (Regulation)": "/static/icons/insidehousing.png",
                 "Google News - LBL Housing": "/static/icons/googlenews.png",
-                "Peter Apps": "/static/icons/substack.jpeg",
+                "Peter Apps": "/static/icons/substack.png",
                 "Centre for Cities": "/static/icons/centerforcities.png",
                 "Trust for London": "/static/icons/trustforlondon.jpeg",
                 "Local Gov & Social Care Ombudsman": "/static/icons/lgsco.png",
                 "G15": "/static/icons/g15.png",
                 "Centre for London": "/static/icons/centreforlondon.png",
                 "UK Collaborative Centre for Housing Evidence": "/static/icons/ukcche.png",
+                "Guardian - Social Housing": "/static/icons/guardian.png",
+                "Centre for Homelessness Impact": "/static/icons/centreforhomelessnessimpact.png",
 
         }
         if icons.get(name):
