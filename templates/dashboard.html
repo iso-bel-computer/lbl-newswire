@@ -1,0 +1,262 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Policy Dashboard</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    </head>
+    <body>
+
+
+        <nav>
+            <h4>News Monitor</h4>
+            <div id='categoryselector'>
+                <a class='category {% if selected == "all" %}selected{% endif %}'  href='/'>All</a>
+                {% for category in categories %}
+                <a class='category {% if selected == category[0] %}selected{% endif %}'  href='/?category={{ category[0] }}'>{{ category[0] }}</a>
+                {% endfor %}
+            </div>
+        </nav>
+        <div id='wrapper'>
+            <div id='controlsContainer'>
+                <input type="text" id="articleSearch" placeholder="Search titles or sources...">
+                <p id='numberofarticles'>-</p>
+                <hr>
+                <div >
+                    <label for='displayHidden'>Show hidden items?</label>
+                    <input type='checkbox' name='displayHidden' id='displayHidden'>
+                </div>
+                <div >
+                    <label for='displayPinnedOnly'>Show pinned items only?</label>
+                    <input type='checkbox' name='displayPinnedOnly' id='displayPinnedOnly'>
+                </div>
+                <hr>
+                <div>
+                    <label for='showHideAll'>Show / Hide all?</label>
+                    <input type='checkbox' checked name='showHideAll' id='showHideAll'>
+                </div>
+                <div id='sourceselection'>
+                    <table>
+                    {% for source in sources %}
+                        <tr style='text-align: right'>
+
+                            <td>
+                        <label  for='display_{{ source[0] | replace(" ", "") }}'>{{ source[0] }}</label>
+                        </td>
+                        <td>
+                        <input data-source='{{ source[0] }}' checked type='checkbox' name='display_{{ source[0] | replace(" ", "") }}' id='display_{{ source[0] | replace(" ", "") }}'>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                        </table>
+                </div>
+            </div>
+            <div id='tableContainer'>
+                <table id='articlesTable'>
+                    {% for article in articles %}
+                    <tr hidden data-link='{{ article.url }}' data-id='{{ article.article_id }}' class='{% if dateIsRecent(article.year, article.month, article.day) %}recent {% endif %}{% if article.relevance > 1.01 %}somewhat{% else %}not{% endif %}_relevant' {% if article.relevance < 1.01 %}hidden{% endif %} data-source='{{ article.source }}'>
+                        <td class='pin'>📌</td>
+                        <td class='hide'>❌</td>
+                        <td class='mail'>📧</td>
+                        <td class='article'>
+                            <a class='title' target='_blank' href='{{ article.url }}'>
+                                {{ article.title }}
+                            </a>
+                            <div class='date'> {{ format_date(article.year, article.month, article.day) }}</div>
+                            <p>{{ article.summary | replace('<p>', '') | replace('</p>', '')}}</p>
+                        </td>
+                        <td class='article_source'>
+                            {% if returnIcon(article.source) %}
+                                <img class='sourceicon' src='{{ returnIcon(article.source) }}'>
+                            {% else %}
+                                {{ article.source }}
+                            {% endif %}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <script type='module'>
+
+            function loadSavedList(listname) {
+                let list = JSON.parse(localStorage.getItem(listname))
+                if (!list) {list = []}
+                return list
+            }
+
+            const checkbox = document.getElementById('displayHidden')
+            const pinnedbox = document.getElementById('displayPinnedOnly')
+            const sourceselection = document.getElementById('sourceselection')
+            const showhideall = document.getElementById('showHideAll')
+            const searchbox = document.getElementById('articleSearch')
+            const tableContainer = document.getElementById('tableContainer')
+
+            let hiddenSources = loadSavedList('hiddenSources')
+
+            sourceselection.querySelectorAll('input').forEach(checkbox => {
+                if (hiddenSources.includes(checkbox.dataset.source)) {checkbox.click()}
+            })
+
+            const rows = Array.from(document.querySelectorAll('#articlesTable tr')).map(row => ({
+                el: row,
+                text: row.textContent.toLowerCase().replace(/\s+/g, ' '),
+                irrelevant: row.classList.contains('not_relevant'),
+                pinned: row.classList.contains('very_relevant'),
+                id: row.dataset.id,
+                source: row.dataset.source
+            }))
+
+            function applyFilters() {
+                const query = searchbox.value.trim().toLowerCase()
+                const showIrrelevant = checkbox.checked
+                const pinnedOnly = pinnedbox.checked
+                const numberofarticles = document.getElementById('numberofarticles')
+                let displayed = 0
+
+                for (const row of rows) {
+                    const visible = (showIrrelevant || !row.irrelevant) &&
+                                    (!query || row.text.includes(query)) &&
+                                    (!pinnedOnly || row.pinned) &&
+                                    (!hiddenSources.includes(row.source))
+
+                    if (row.el.hidden === visible) {
+                        row.el.hidden = !visible
+                    }
+
+                    if (row.pinned) {row.el.classList.add('very_relevant')}
+                    else {row.el.classList.remove('very_relevant')}
+
+                    if (row.irrelevant) {row.el.classList.add('not_relevant')}
+                    else {row.el.classList.remove('not_relevant')}
+
+                    if (visible) {displayed++}
+
+                }
+                numberofarticles.innerText = `${displayed} items.`
+
+            }
+
+            let timer
+            searchbox.addEventListener('input', () => {
+                clearTimeout(timer)
+                timer = setTimeout(applyFilters, 120)
+            })
+            checkbox.addEventListener('change', applyFilters)
+            pinnedbox.addEventListener('change', applyFilters)
+            showhideall.addEventListener('change', () => {
+
+                sourceselection.querySelectorAll('input').forEach(checkbox => {
+                    if (checkbox.checked != showhideall.checked) {
+                        checkbox.click()
+                    }
+                })
+            })
+            sourceselection.querySelectorAll('input').forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    console.log(checkbox.checked)
+                    if (checkbox.checked) {
+                        hiddenSources = hiddenSources.filter(source => source !== checkbox.dataset.source)
+                    }
+                    else if (!checkbox.checked && !hiddenSources.includes(checkbox.dataset.source)) {
+                        hiddenSources.push(checkbox.dataset.source)
+                    }
+                    applyFilters()
+                    localStorage.setItem("hiddenSources", JSON.stringify(hiddenSources))
+
+                })
+            })
+
+
+
+
+
+
+
+            // saving articles in localstorage
+            function getArticle(article_id) {
+                const found = rows.find(row => row.id === article_id)
+                return found
+            }
+
+            let pinnedArticles     = loadSavedList('pinnedArticles')
+            let irrelevantArticles = loadSavedList('irrelevantArticles')
+
+            pinnedArticles.forEach(article_id => {
+                const item = getArticle(article_id)
+                if (!item) {return}
+                item.pinned = true
+            })
+
+            irrelevantArticles.forEach(article_id => {
+                const item = getArticle(article_id)
+                if (!item) {return}
+                item.irrelevant = true
+            })
+
+            applyFilters()
+
+            tableContainer.addEventListener('click', async (e) => {
+                const tr = e.target.closest('tr')
+                if (!tr) {return}
+
+                const item = getArticle(tr.dataset.id)
+                const pin  = e.target.closest('.pin')
+                const hide = e.target.closest('.hide')
+                const mail = e.target.closest('.mail')
+
+                if (pin) {
+                    if (!item.pinned) {
+                        if (!pinnedArticles.includes(item.id)) {pinnedArticles.push(item.id)}
+                        localStorage.setItem("pinnedArticles", JSON.stringify(pinnedArticles))
+                        item.pinned = true
+                    } else {
+                        if (pinnedArticles.includes(item.id)) {
+                            pinnedArticles = pinnedArticles.filter(id => id !== item.id)
+                        }
+                        item.pinned = false
+                    }
+                    localStorage.setItem("pinnedArticles", JSON.stringify(pinnedArticles))
+                    applyFilters()
+                }
+
+                if (hide) {
+                    if (!item.irrelevant) {
+                        if (!irrelevantArticles.includes(item.id)) {irrelevantArticles.push(item.id)}
+                        item.irrelevant = true
+                    }
+                    else {
+                        if (irrelevantArticles.includes(item.id)) {
+                            irrelevantArticles = irrelevantArticles.filter(id => id !== item.id)
+                        }
+                        item.irrelevant = false
+                    }
+                    localStorage.setItem("irrelevantArticles", JSON.stringify(irrelevantArticles))
+                    applyFilters()
+                }
+
+                if (mail) {
+                    const url   = item.el.dataset.link
+                    const title = item.el.querySelector('.title').textContent.trim()
+
+                    if (navigator.share) {
+                        try { await navigator.share({ title, url }) }
+                        catch (err) { if (err.name !== 'AbortError') console.error(err) }
+                    } else {
+                        window.location.href =
+                            `mailto:?body=${encodeURIComponent(title)}%20-%20${encodeURIComponent(url)}`
+                    }
+                }
+            })
+
+
+            </script>
+        </div>
+    </body>
+</html>

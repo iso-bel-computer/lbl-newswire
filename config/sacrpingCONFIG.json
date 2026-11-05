@@ -1,0 +1,121 @@
+[
+    {
+        "path": "./scrapers/commons-hclg.py",
+        "name": "Commons - Housing Select Committee",
+        "category": "Government",
+        "url": "https://committees.parliament.uk/committee/17/housing-communities-and-local-government-committee/news/",
+        "shortname": "C-HSC"
+    },
+    {
+        "path": "./scrapers/nhf.py",
+        "name": "National Housing Federation",
+        "category": "Advocacy Group",
+        "url": "https://www.housing.org.uk/news-and-blogs/",
+        "shortname": "NHF"
+    },
+    {
+        "path": "./scrapers/cih.py",
+        "name": "CIH",
+        "url": "https://www.cih.org/news/",
+        "category": "Advocacy Group",
+        "shortname": "CIH"
+    },
+    {
+        "path": "./scrapers/shelter.py",
+        "name": "Shelter",
+        "category": "Charity / Think Tank",
+        "url": "https://england.shelter.org.uk/what_we_do/updates_insights_and_impact",
+        "shortname": "Shelter"
+    },
+    {
+        "path": "./scrapers/lga.py",
+        "name": "LGA",
+        "url": "https://www.local.gov.uk/about/news?topic[2599]=2599",
+        "category": "Advocacy Group",
+        "shortname": "LGA"
+    },
+    {
+        "path": "./scrapers/c4l.py",
+        "name": "Centre for London",
+        "category": "Charity / Think Tank",
+        "url": "https://centreforlondon.org/search/?select-post_type%5B%5D=publication",
+        "shortname": "C4L"
+    },
+    {
+        "path": "./scrapers/lc.py",
+        "name": "London Councils",
+        "category": "Advocacy Group",
+        "url": "https://www.londoncouncils.gov.uk/news-and-press-releases?f%5B0%5D=categories%3A347",
+        "shortname": "LC"
+    },
+    {
+        "path": "./scrapers/t4l.py",
+        "name": "Trust for London",
+        "category": "Charity / Think Tank",
+        "url": "https://trustforlondon.org.uk/research/",
+        "shortname": "LC"
+    },
+    {
+        "path": "./scrapers/mj.py",
+        "name": "The MJ",
+        "url": "https://www.themj.co.uk/tag/housing",
+        "shortname": "MJ",
+        "category": "News"
+    },
+    {
+        "path": "./scrapers/c4c.py",
+        "name": "Centre for Cities",
+        "category": "Charity / Think Tank",
+        "url": "https://www.centreforcities.org/research/?select-driver%5B%5D=housing-and-transport",
+        "shortname": "C4C"
+    },
+    {
+        "path": "./scrapers/c4l.py",
+        "name": "Centre for London",
+        "category": "Charity / Think Tank",
+        "url": "https://centreforlondon.org/research-and-ideas/",
+        "shortname": "C4L"
+    },
+    {
+        "path": "./scrapers/ih.py",
+        "name": "Inside Housing (Regulation)",
+        "category": "News",
+        "url": "https://www.insidehousing.co.uk/regulation",
+        "shortname": "IH"
+    },
+    {
+        "path": "./scrapers/g15.py",
+        "name": "G15",
+        "category": "Advocacy Group",
+        "url": "https://g15.london/news-insights",
+        "shortname": "G15"
+    },
+    {
+        "path": "./scrapers/homelesslink.py",
+        "name": "Homeless Link",
+        "category": "Charity / Think Tank",
+        "url": "https://homeless.org.uk/news/",
+        "shortname": "HL"
+    },
+    {
+        "path": "./scrapers/crisis.py",
+        "name": "Crisis",
+        "category": "Charity / Think Tank",
+        "url": "https://www.crisis.org.uk/about-us/crisis-media-centre/",
+        "shortname": "Crisis"
+    },
+    {
+        "path": "./scrapers/lgsco.py",
+        "name": "Local Gov & Social Care Ombudsman",
+        "category": "Regulation",
+        "url": "https://www.lgo.org.uk/information-centre/news",
+        "shortname": "LGSCO"
+    },
+    {
+        "path": "./scrapers/ukcche.py",
+        "name": "UK Collaborative Centre for Housing Evidence",
+        "category": "Charity / Think Tank",
+        "url": "https://housingevidence.ac.uk/whats-happening/publications/",
+        "shortname": "UKCCHE"
+    }
+]

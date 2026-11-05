@@ -1,0 +1,80 @@
+[
+    {
+        "name": "Salamander",
+        "category": "News",
+        "url": "https://www.salamandernews.org/tag/housing/rss"
+    },
+    {
+        "name": "HO",
+        "category": "Regulation",
+        "url": "https://www.housing-ombudsman.org.uk/news/feed"
+    },
+    {
+        "name": "RSH - Comms",
+        "category": "Regulation",
+        "url": "https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=regulator-of-social-housing"
+    },
+    {
+        "name": "RSH - Regulation",
+        "category": "Regulation",
+        "url": "https://www.gov.uk/search/guidance-and-regulation.atom?organisations%5B%5D=regulator-of-social-housing"
+    },
+    {
+        "name": "RSH - Research",
+        "category": "Regulation",
+        "url": "https://www.gov.uk/search/research-and-statistics.atom?content_store_document_type=all_research_and_statistics&organisations%5B%5D=regulator-of-social-housing"
+    },
+    {
+        "name": "RSH - Policy",
+        "category": "Regulation",
+        "url": "https://www.gov.uk/search/policy-papers-and-consultations.atom?organisations%5B%5D=regulator-of-social-housing"
+    },
+    {
+        "name": "MHCLG - Regulation",
+        "category": "Government",
+        "url": "https://www.gov.uk/search/guidance-and-regulation.atom?organisations%5B%5D=ministry-of-housing-communities-local-government"
+    },
+    {
+        "name": "MHCLG - Comms",
+        "category": "Government",
+        "url": "https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=ministry-of-housing-communities-local-government"
+    },
+    {
+        "name": "MHCLG - Research",
+        "category": "Government",
+        "url": "https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=ministry-of-housing-communities-local-government"
+    },
+    {
+        "name": "MHCLG - Policy",
+        "category": "Government",
+        "url": "https://www.gov.uk/search/policy-papers-and-consultations.atom?organisations%5B%5D=ministry-of-housing-communities-local-government"
+    },
+    {
+        "name": "HCLIC Stats",
+        "category": "Government",
+        "url": "https://www.gov.uk/search/research-and-statistics.atom?content_store_document_type=all_research_and_statistics&topic%5B%5D=dad5f9c9-410f-4320-aa14-860ccba2273e"
+    },
+    {
+        "name": "GLA - Mayor",
+        "category": "Government",
+        "url": "https://www.london.gov.uk/rss-feeds/80610"
+    },
+    {
+        "name": "GLA - Assembly",
+        "category": "Government",
+        "url": "https://www.london.gov.uk/rss-feeds/80611"
+    },
+    {
+        "name": "Peter Apps",
+        "category": "News",
+        "url": "https://peteapps.substack.com/feed"
+    },
+    {
+
+        "name": "Google News - LBL Housing",
+        "category": "News",
+        "url": "https://news.google.com/rss/search?q=housing+lewisham"
+    }
+
+
+]

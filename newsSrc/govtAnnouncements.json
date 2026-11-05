@@ -1,0 +1,56 @@
+
+[
+    {
+        "title": "Housing Ombudsman",
+        "url": "https://www.housing-ombudsman.org.uk/news/feed"
+    },
+    {
+        "title": "RSH - Communications",
+        "url": "https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=regulator-of-social-housing"
+    },
+    {
+        "title": "RSH - Guidance and Regulation",
+        "url": "https://www.gov.uk/search/guidance-and-regulation.atom?organisations%5B%5D=regulator-of-social-housing"
+    },
+    {
+        "title": "RSH - Research and Statistics",
+        "url": "https://www.gov.uk/search/research-and-statistics.atom?content_store_document_type=all_research_and_statistics&organisations%5B%5D=regulator-of-social-housing"
+    },
+    {
+        "title": "RSH - Policy Papers and Consultations",
+        "url": "https://www.gov.uk/search/policy-papers-and-consultations.atom?organisations%5B%5D=regulator-of-social-housing"
+    },
+    {
+        "title": "MHCLG - Guidance and Regulation",
+        "url": "https://www.gov.uk/search/guidance-and-regulation.atom?organisations%5B%5D=ministry-of-housing-communities-local-government"
+    },
+    {
+        "title": "MHCLG - News and Communications",
+        "url": "https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=ministry-of-housing-communities-local-government"
+    },
+    {
+        "title": "MHCLG - Research and Statistics",
+        "url": "https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=ministry-of-housing-communities-local-government"
+    },
+    {
+        "title": "MHCLG - Policy Papers and Consultations",
+        "url": "https://www.gov.uk/search/policy-papers-and-consultations.atom?organisations%5B%5D=ministry-of-housing-communities-local-government"
+    },
+    {
+        "title": "MHCLG - HCLIC Homelessness Stats",
+        "url": "https://www.gov.uk/search/research-and-statistics.atom?content_store_document_type=all_research_and_statistics&topic%5B%5D=dad5f9c9-410f-4320-aa14-860ccba2273e"
+    },
+    {
+        "title": "Greater London Authority - Mayor's Press Releases",
+        "url": "https://www.london.gov.uk/rss-feeds/80610"
+    },
+    {
+        "title": "Greater London Authority - Assembly Press Releases",
+        "url": "https://www.london.gov.uk/rss-feeds/80611"
+    },
+    {
+        "title": "Chartered Institue of Housing",
+        "url": "https://news.google.com/rss/search?q=site:cih.org/news"
+    }
+
+]

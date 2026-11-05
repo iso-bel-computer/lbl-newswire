@@ -1,0 +1,7 @@
+venv/
+data/
+local-jev/
+__pycache__/
+.DS_Store
+._.DS_Store
+._*
