@@ -66,7 +66,7 @@
                         <td class='hide'>❌</td>
                         <td class='mail'>📧</td>
                         <td class='article'>
-                            <a class='title' target='_blank' href='{{ article.url }}'>
+                            <a tabindex=-1 class='title' target='_blank' href='{{ article.url }}'>
                                 {{ article.title }}
                             </a>
                             <p>{{ article.summary | replace('<p>', '') | replace('</p>', '')}}</p>
