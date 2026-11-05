@@ -87,8 +87,10 @@ table {
     border-bottom: 1px dotted hsl(0 0% 0% / 0.2);
 }
 
- #tableContainer table tr:hover {
-    background-color: #dbdbdb60;
+#tableContainer table tr:focus  {
+    background-color: #dbdbdb !important;
+    border-top : 1px solid hsl(0 0% 0% / 0.3);
+    border-bottom: 1px solid hsl(0 0% 0% / 0.3);
 }
 
 #tableContainer table td {
@@ -108,24 +110,56 @@ table {
 
 td.article {
     padding-left: 15px;
-    max-width: 62vw;
-    min-width: 62vw;
+    max-width: 50vw;
+    min-width: 50vw;
     overflow: hidden;
     border-left: 1px dotted black;
 }
 
 td.article p {
     margin: 0px;
-    margin-bottom: 8px;
     margin-top: 2px;
+    margin-bottom: 6px;
     max-width: 600px;
 }
+
+td.notes {
+
+    max-width: 10vw;
+    min-width: 10vw;
+}
+
+td.notes textarea {
+    width: 100%;
+    background-color:  hsl(0 0% 0% / 0);
+    color:  hsl(0 0% 0% / 0.8);
+    border: 0px solid hsl(0 0% 0% / 0);
+    field-sizing: content;
+    font-style: italic;
+    padding-left: 10px;
+
+}
+
+td.notes textarea::placeholder {
+    color:  hsl(0 0% 0% / 0.5);
+    field-sizing: fixed;
+}
+textarea::-webkit-resizer {
+  display: none;
+}
+textarea::-moz-resizer {
+  display: none;
+}
+
 
 td a.title {
     color: black;
     font-weight: bold;
     font-size: 1.1em;
-    max-width: 500px;
+
+}
+td .headlinewrapper {
+    max-width: 600px;
 
 }
 
@@ -192,18 +226,19 @@ label {
     max-width: 200px;
 }
 
-.pin, .hide, .mail {
+.pin, .hide, .mail, .note {
     min-width: 2vw;
     max-width: 2vw;
     filter: saturate(0%);
     font-size: 9px;
+    vertical-align: center;
     cursor: pointer;
 }
 
 .mail a {
     text-decoration: none;
 }
-.pin:hover, .hide:hover, .mail:hover {
+.pin:hover, .hide:hover, .mail:hover, .note:hover  {
     filter: saturate(100%);
 }
 

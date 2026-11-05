@@ -66,10 +66,16 @@
                         <td class='hide'>❌</td>
                         <td class='mail'>📧</td>
                         <td class='article'>
-                            <a tabindex=-1 class='title' target='_blank' href='{{ article.url }}'>
+                            <div class='headlinewrapper'>
+                            <a tabindex='-1' class='title' target='_blank' href='{{ article.url }}'>
                                 {{ article.title }}
                             </a>
+                            </div>
                             <p>{{ article.summary | replace('<p>', '') | replace('</p>', '')}}</p>
+                        </td>
+                        <td class='notes'>
+
+                            <textarea tabindex='-1' placeholder='-'></textarea>
                         </td>
                         <td class='date'>
                              {{ format_date(article.year, article.month, article.day) }}
@@ -99,25 +105,33 @@
             </div>
             <script type='module'>
 
-            function loadSavedList(listname) {
-                let list = JSON.parse(localStorage.getItem(listname))
-                if (!list) {list = []}
-                return list
+            //////////
+            // Init //
+            //////////
+
+            function loadLocalStorage(listname, datatype) {
+                const storage = JSON.parse(localStorage.getItem(listname))
+                if (storage) return storage
+                return datatype === 'array' ? [] : {}
             }
 
-            const checkbox = document.getElementById('displayHidden')
-            const pinnedbox = document.getElementById('displayPinnedOnly')
-            const sourceselection = document.getElementById('sourceselection')
-            const showhideall = document.getElementById('showHideAll')
-            const searchbox = document.getElementById('articleSearch')
-            const tableContainer = document.getElementById('tableContainer')
-            const controlsContainer = document.getElementById('controlsContainer')
+            const checkbox           = document.getElementById('displayHidden')
+            const pinnedbox          = document.getElementById('displayPinnedOnly')
+            const sourceselection    = document.getElementById('sourceselection')
+            const showhideall        = document.getElementById('showHideAll')
+            const searchbox          = document.getElementById('articleSearch')
+            const tableContainer     = document.getElementById('tableContainer')
+            const controlsContainer  = document.getElementById('controlsContainer')
 
-            let hiddenSources = loadSavedList('hiddenSources')
+            let hiddenSources        = loadLocalStorage('hiddenSources', 'array')
+            let pinnedArticles       = loadLocalStorage('pinnedArticles', 'array')
+            let irrelevantArticles   = loadLocalStorage('irrelevantArticles', 'array')
+            let articleNoteList      = loadLocalStorage('articleNoteList', 'obj')
 
-            sourceselection.querySelectorAll('input').forEach(checkbox => {
-                if (hiddenSources.includes(checkbox.dataset.source)) {checkbox.click()}
-            })
+            /////////////////////////////////////////
+            // Parsing rows to buid data structure //
+            // so that we can filter quicker later //
+            /////////////////////////////////////////
 
             const rows = Array.from(document.querySelectorAll('#articlesTable tr')).map(row => ({
                 el: row,
@@ -127,6 +141,11 @@
                 id: row.dataset.id,
                 source: row.dataset.source
             }))
+
+            function getArticle(article_id) {
+                const found = rows.find(row => row.id === article_id)
+                return found
+            }
 
             function applyFilters() {
                 const query = searchbox.value.trim().toLowerCase()
@@ -163,49 +182,72 @@
 
             }
 
-            let timer
-            searchbox.addEventListener('input', () => {
-                clearTimeout(timer)
-                timer = setTimeout(applyFilters, 120)
-            })
-            checkbox.addEventListener('change', applyFilters)
-            pinnedbox.addEventListener('change', applyFilters)
-            showhideall.addEventListener('change', () => {
-                sourceselection.querySelectorAll('input').forEach(checkbox => {
-                    if (checkbox.checked != showhideall.checked) {
-                        checkbox.click()
-                    }
-                })
-            })
+            //////////////////////////////
+            // Restoring previous state //
+            //////////////////////////////
+
             sourceselection.querySelectorAll('input').forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    console.log(checkbox.checked)
-                    if (checkbox.checked) {
-                        hiddenSources = hiddenSources.filter(source => source !== checkbox.dataset.source)
-                    }
-                    else if (!checkbox.checked && !hiddenSources.includes(checkbox.dataset.source)) {
-                        hiddenSources.push(checkbox.dataset.source)
-                    }
-                    applyFilters()
-                    localStorage.setItem("hiddenSources", JSON.stringify(hiddenSources))
-
-                })
+                if (hiddenSources.includes(checkbox.dataset.source)) {checkbox.click()}
             })
 
+            Object.entries(articleNoteList).forEach((entry, _) => {
+                const article_id = entry[0]
+                const note = entry[1]
+                const article = getArticle(article_id)
+                if (article) {
+                    const textarea = article.el.querySelector('textarea')
+                    textarea.value = note
+                    textarea.tabindex = '1'
+                }
+            })
 
+            ////////////////////////////////
+            // Setting up event listeners //
+            ////////////////////////////////
 
+            function addEventListeners() {
 
+                let timer
 
+                searchbox.addEventListener('input', () => {
+                    clearTimeout(timer)
+                    timer = setTimeout(applyFilters, 120)
+                })
 
+                checkbox.addEventListener('change', applyFilters)
 
-            // saving articles in localstorage
-            function getArticle(article_id) {
-                const found = rows.find(row => row.id === article_id)
-                return found
+                pinnedbox.addEventListener('change', applyFilters)
+
+                showhideall.addEventListener('change', () => {
+                    sourceselection.querySelectorAll('input').forEach(checkbox => {
+                        if (checkbox.checked != showhideall.checked) {
+                            checkbox.click()
+                        }
+                    })
+                })
+
+                sourceselection.querySelectorAll('input').forEach(checkbox => {
+                    checkbox.addEventListener('change', () => {
+                        console.log(checkbox.checked)
+                        if (checkbox.checked) {
+                            hiddenSources = hiddenSources.filter(source => source !== checkbox.dataset.source)
+                        }
+                        else if (!checkbox.checked && !hiddenSources.includes(checkbox.dataset.source)) {
+                            hiddenSources.push(checkbox.dataset.source)
+                        }
+                        applyFilters()
+                        localStorage.setItem("hiddenSources", JSON.stringify(hiddenSources))
+
+                    })
+                })
+
             }
 
-            let pinnedArticles     = loadSavedList('pinnedArticles')
-            let irrelevantArticles = loadSavedList('irrelevantArticles')
+            addEventListeners()
+
+            ////////////////////////
+            // Loading saved info //
+            ////////////////////////
 
             pinnedArticles.forEach(article_id => {
                 const item = getArticle(article_id)
@@ -221,6 +263,10 @@
 
             applyFilters()
 
+            ////////////////////////
+            // Click interaction  //
+            ////////////////////////
+
             tableContainer.addEventListener('click', async (e) => {
                 const tr = e.target.closest('tr')
                 if (!tr) {return}
@@ -229,11 +275,19 @@
                 const pin  = e.target.closest('.pin')
                 const hide = e.target.closest('.hide')
                 const mail = e.target.closest('.mail')
+                const textarea = e.target.closest('textarea')
+                const note = e.target.closest('.note')
                 const a    = e.target.closest('a')
 
+                // No action
 
+                if (a || textarea) {
+                    null
+                }
 
-                if (pin) {
+                // Pinning article
+
+                else if (pin) {
                     if (!item.pinned) {
                         if (!pinnedArticles.includes(item.id)) {pinnedArticles.push(item.id)}
                         localStorage.setItem("pinnedArticles", JSON.stringify(pinnedArticles))
@@ -247,6 +301,9 @@
                     localStorage.setItem("pinnedArticles", JSON.stringify(pinnedArticles))
                     applyFilters()
                 }
+
+                // Hiding article
+
                 else if (hide) {
                     if (!item.irrelevant) {
                         if (!irrelevantArticles.includes(item.id)) {irrelevantArticles.push(item.id)}
@@ -262,6 +319,8 @@
                     applyFilters()
                 }
 
+                // Sharing article
+
                 else if (mail) {
                     const url   = item.el.dataset.link
                     const title = item.el.querySelector('.title').textContent.trim()
@@ -274,39 +333,78 @@
                             `mailto:?body=${encodeURIComponent(title)}%20-%20${encodeURIComponent(url)}`
                     }
                 }
-                else if (a) {
-                    null // dont toggle pin if you've clicked on link
+
+                // Writing notes
+
+                else if (note) {
+                    const textarea = tr.querySelector('textArea')
+                    textarea.hidden = !textarea.hidden
+                    textarea.focus()
                 }
+
                 else {
                     tr.focus()
                 }
             })
 
+            //////////////////////////////////////////////////////////
+            // Mapping keyboard tabbing through articles to clicks  //
+            // ...this should really be refactored                  //
+            //////////////////////////////////////////////////////////
 
+            let neighbour = null
             tableContainer.addEventListener('keydown', (e) => {
                 if (e.target.tagName === 'TR' ) {
+                    const tr = e.target.closest('tr')
                     switch (e.key) {
                         case "p":
                         case "P":
                             e.preventDefault()
                             e.target.querySelector('.pin').click()
+                            console.log(e.target)
+                            if (e.target.hidden) {
+                                neighbour = e.target.nextElementSibling
+                                while (neighbour.hidden) {
+                                    neighbour = neighbour.nextElementSibling
+                                    console.log(neighbour)
+                                }
+                                neighbour.focus()
+                            }
                             break
                         case "m":
                         case "M":
                             e.preventDefault()
                             e.target.querySelector('.mail').click()
                             break
+                        case "n":
+                        case "N":
+                            e.preventDefault()
+                            e.target.querySelector('textarea').focus()
+                            break
                         case "h":
                         case "H":
                             e.preventDefault()
-                            const tr = e.target.closest('tr')
-                            let neighbour = tr.nextElementSibling
-                            if (!checkbox.checked) { // if we're not displaying the hidden rows
-                                while (neighbour.hidden) {
-                                    neighbour = neighbour.nextElementSibling
-                                }
+                            neighbour = tr.nextElementSibling
+                            while (neighbour.hidden) {
+                                neighbour = neighbour.nextElementSibling
                             }
                             e.target.querySelector('.hide').click()
+                            neighbour.focus()
+                            break
+                        case "ArrowDown":
+                            e.preventDefault()
+                            neighbour = tr.nextElementSibling
+                            while (neighbour.hidden) {
+                                neighbour = neighbour.nextElementSibling
+                            }
+                            neighbour.focus()
+                            break
+                        case "ArrowUp":
+                            e.preventDefault()
+                            neighbour = tr.previousElementSibling
+                            while (neighbour.hidden) {
+                                neighbour = neighbour.previousElementSibling
+                            }
                             neighbour.focus()
                             break
                         case "Enter":
@@ -317,6 +415,19 @@
                 }
             })
 
+            tableContainer.addEventListener('input', (e) => {
+                const ta = e.target.closest('textarea')
+                if (!ta) return
+                const id = ta.closest('tr').dataset.id
+                clearTimeout(ta._timer)
+                ta._timer = setTimeout(() => saveNote(id, ta.value), 500)
+            })
+
+            function saveNote(id, text) {
+                if (text.trim()) articleNoteList[id] = text
+                else delete articleNoteList[id]   // don't keep empty notes
+                localStorage.setItem('articleNoteList', JSON.stringify(articleNoteList))
+            }
             </script>
         </div>
     </body>
