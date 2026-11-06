@@ -1,47 +1,71 @@
-import importlib.util
 import sys
 import json
 import requests
 import dateparser
 import datetime
 import traceback
+import importlib
+# booting selenium
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 
 def scrapeWebsites(log):
 
     with open("./config/sacrpingCONFIG.json") as f:
         scrapers = json.load(f)
 
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
     headers = {"User-Agent": "PolicyDashboard/1.0 (izzy@iso-bel.computer)"}
     scrapedArticles = []
 
-    for scraper in scrapers:
+    driver = None
 
-        try:
-            spec = importlib.util.spec_from_file_location(scraper['shortname'], scraper['path'])
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
+    try:
+        for scraper in scrapers:
 
-            print(f"fetching {scraper['url']}")
-            page = requests.get(scraper['url'], headers=headers, timeout=20)
+            try:
+                spec = importlib.util.spec_from_file_location(scraper['shortname'], scraper['path'])
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
 
-            if page.status_code != 200:
-                raise Exception(f'Bad status code for {scraper["name"]}: {page.status_code}')
+                if scraper['type'] == 'selenium':
 
-            articles = module.scrape(page, scraper)
+                    if driver is None:
+                        options = Options()
+                        options.add_argument("-headless")
+                        options.add_argument("--width=1920")
+                        options.add_argument("--height=1080")
+                        driver = webdriver.Firefox(options=options)
 
-            for article in articles:
-                scrapedArticles.append(article)
+                    driver.get(scraper['url'])
+                    articles = module.scrape(driver.page_source, scraper)
 
-            print(f"Scraper - Fetched {len(articles)} from {scraper['name']}")
+                elif scraper['type'] == 'standard':
 
-        except Exception as e:
-            log[scraper['name']] = {
-                "fetched": 0,
-                "new": 0,
-                "error": str(e)
-            }
+                    page = requests.get(scraper['url'], headers=headers, timeout=20)
 
-            traceback.print_exc()
+                    if page.status_code != 200:
+                        raise Exception(f'Bad status code for {scraper["name"]}: {page.status_code}')
+
+                    articles = module.scrape(page, scraper)
+
+                else:
+                    raise Exception(f'Unknown scraper type for {scraper["name"]}: {scraper["type"]}')
+
+                scrapedArticles.extend(articles)
+
+            except Exception as e:
+
+                log[scraper['name']] = {
+                    "fetched": 0,
+                    "new": 0,
+                    "error": str(e)
+                }
+
+                traceback.print_exc()
+
+    finally:
+        if driver is not None:
+            driver.quit()
 
     return scrapedArticles
