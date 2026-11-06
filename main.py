@@ -6,6 +6,7 @@ import json
 import dateparser
 import time
 from scrapingloop import scrapeWebsites
+from pathlib import Path
 import sqlite3
 from datetime import datetime
 
@@ -13,6 +14,8 @@ sqliteConnection = sqlite3.connect("./data/articles.db")
 cursor = sqliteConnection.cursor()
 cursor.execute("PRAGMA foreign_keys = ON;")
 sqliteConnection.commit()
+
+BASE_DIR = Path(__file__).resolve().parent
 
 articleTableSchema = "CREATE TABLE IF NOT EXISTS articles (\n    article_id INTEGER PRIMARY KEY,\n title TEXT,\n url TEXT UNIQUE,\n summary TEXT,\n year TEXT,\n month TEXT,\n day TEXT,\n source TEXT\n, category TEXT\n, relevant TEXT\n)"
 cursor.execute(articleTableSchema)
@@ -33,6 +36,7 @@ def addArticle(title, url, summary, year, month, day, source, category):
     """, (title, day))
 
     alreadyIn = cursor.fetchall()
+
     if len(alreadyIn) < 1:
         relevance = getRelevanceScore(f"From {source} - {title} - {summary}")
         cursor.execute("""
@@ -40,6 +44,10 @@ def addArticle(title, url, summary, year, month, day, source, category):
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (title, url, summary, year, month, day, f"{year}-{month}-{day}" , source, category, relevance))
         sqliteConnection.commit()
+
+        return True
+
+    return False
 
 
 with open("./newsSrc/livenews.json") as f:
@@ -72,7 +80,8 @@ def getRelevanceScore(assessingText):
 
 
 
-SCRAPEDARTICLES = scrapeWebsites()
+log = {}
+SCRAPEDARTICLES = scrapeWebsites(log)
 
 
 def normaliseDate(datestr):
@@ -89,6 +98,21 @@ def normaliseDate(datestr):
     return cleanDate
 
 
+def logarticle(source, new):
+
+    if not log.get(source):
+        log[source] = {
+            "fetched": 0,
+            "new": 0,
+            "error": None
+        }
+
+
+    log[source]['fetched'] += 1
+    if new:
+        log[source]['new'] += 1
+
+
 
 for entry in SCRAPEDARTICLES:
 
@@ -96,7 +120,7 @@ for entry in SCRAPEDARTICLES:
     if not date:
         date = {'year': 00, 'month': 00, 'day': 00}
 
-    addArticle(
+    articleIsNew = addArticle(
         entry['title'],
         entry['url'],
         entry['description'],
@@ -107,6 +131,8 @@ for entry in SCRAPEDARTICLES:
         entry['category']
     )
 
+    logarticle(entry['source'], articleIsNew)
+
 
 for source in liveNews:
 
@@ -114,7 +140,7 @@ for source in liveNews:
     feed = feedparser.parse(source['url'])
 
     for entry in feed.entries:
-        addArticle(
+        entryIsNew = addArticle(
             entry.title,
             entry.link,
             entry.summary,
@@ -125,7 +151,35 @@ for source in liveNews:
             source['category']
         )
 
-    print(f"RSS - Fetched {len(feed.entries)} from {source['name']} ")
+        logarticle(source['name'], entryIsNew)
+
+
+
+
+now = datetime.now().strftime("%y-%m-%d - %H:%M")
+shortnow = datetime.now().strftime("%b-%d")
+
+try:
+    with open('/home/izzy/logs/izzylog', 'a') as izzylog:
+        izzylog.write(f"{shortnow} - Ran Policy Scraper.\n")
+except:
+    print("Unable to open izzylog")
+
+for key, item in log.items():
+    LOGS_PATH = BASE_DIR / "logs" / key
+    ERRORLOG_PATH = BASE_DIR / "logs" / 'ERRORS'
+    with open(LOGS_PATH, 'a') as f:
+        f.write(f"{now} - {key} | {item['fetched']} Fetched - {item['new']} New{ ' - ' + item['error'] if item.get('error') else ''} \n")
+
+    if item.get('error'):
+        try:
+            with open('/home/izzy/logs/izzylog', 'a') as izzylog:
+                izzylog.write(f"{shortnow} - Error fetching {key} - {item['error']}\n")
+        except:
+            print(f"Error fetching {key} - {item['error']} (and unable to open izzylog)")
+
+        with open(ERRORLOG_PATH, 'a') as errorlog:
+            errorlog.write(f"{now} - Error fetching {key} - {item['error']}\n")
 
 sqliteConnection.commit()
 sqliteConnection.close()

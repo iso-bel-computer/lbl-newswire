@@ -6,7 +6,7 @@ import dateparser
 import datetime
 import traceback
 
-def scrapeWebsites():
+def scrapeWebsites(log):
 
     with open("./config/sacrpingCONFIG.json") as f:
         scrapers = json.load(f)
@@ -34,7 +34,14 @@ def scrapeWebsites():
                 scrapedArticles.append(article)
 
             print(f"Scraper - Fetched {len(articles)} from {scraper['name']}")
+
         except Exception as e:
+            log[scraper['name']] = {
+                "fetched": 0,
+                "new": 0,
+                "error": str(e)
+            }
+
             traceback.print_exc()
 
     return scrapedArticles
