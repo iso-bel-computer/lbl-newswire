@@ -30,7 +30,7 @@
     {
         "path": "./scrapers/lga.py",
         "name": "LGA",
-        "url": "https://www.local.gov.uk/about/news?topic[2599]=2599",
+        "url": "https://www.local.gov.uk/about/news",
         "category": "Advocacy Group",
         "shortname": "LGA"
     },
