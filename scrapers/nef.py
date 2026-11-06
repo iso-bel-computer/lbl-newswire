@@ -12,7 +12,7 @@ def scrape(page, scraper):
 
     for item in items:
 
-        ptags = soup.find_all('p')
+        ptags = item.find_all('p')
         itemData = {
 
             "title": item.find("h4").text.strip(),

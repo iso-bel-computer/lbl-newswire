@@ -91,6 +91,7 @@ def returnIcon(name):
                 "Commons Library - Housing": "/static/icons/commons.png",
                 "Housing LIN": "/static/icons/housinglin.png",
                 "New Economics Foundation": "/static/icons/nef.png",
+                "Joseph Rowntree Foundation": "/static/icons/jrf.png",
 
         }
         if icons.get(name):

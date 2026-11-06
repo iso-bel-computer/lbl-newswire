@@ -17,6 +17,14 @@
     },
     {
         "type": "standard",
+        "path": "./scrapers/jrf.py",
+        "name": "Joseph Rowntree Foundation",
+        "category": "Charity / Think Tank",
+        "url": "https://www.jrf.org.uk/api/listing/29740?sort%5Bsearch_api_relevance%5D%5Bpath%5D=search_api_relevance&sort%5Bsearch_api_relevance%5D%5Bdirection%5D=desc&sort%5Bpage_publish_date%5D%5Bpath%5D=page_publish_date&sort%5Bpage_publish_date%5D%5Bdirection%5D=desc",
+        "shortname": "JRF"
+    },
+    {
+        "type": "standard",
         "path": "./scrapers/nef.py",
         "name": "New Economics Foundation",
         "category": "Charity / Think Tank",
