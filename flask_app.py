@@ -87,7 +87,7 @@ def returnIcon(name):
                 "UK Collaborative Centre for Housing Evidence": "/static/icons/ukcche.png",
                 "Guardian - Social Housing": "/static/icons/guardian.png",
                 "Centre for Homelessness Impact": "/static/icons/centreforhomelessnessimpact.png",
-                "Resolution Foundation": "/static/icons/ResolutionFoundation.jpg",
+                "Resolution Foundation": "/static/icons/ResolutionFoundation.png",
 
         }
         if icons.get(name):
