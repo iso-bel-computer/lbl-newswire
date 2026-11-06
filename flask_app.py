@@ -88,6 +88,7 @@ def returnIcon(name):
                 "Guardian - Social Housing": "/static/icons/guardian.png",
                 "Centre for Homelessness Impact": "/static/icons/centreforhomelessnessimpact.png",
                 "Resolution Foundation": "/static/icons/ResolutionFoundation.png",
+                "Commons Library - Housing": "/static/icons/commons.png",
 
         }
         if icons.get(name):

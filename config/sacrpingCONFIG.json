@@ -1,5 +1,14 @@
 [
     {
+        "type": "selenium",
+        "path": "./scrapers/commons-library.py",
+        "name": "Commons Library - Housing",
+        "category": "Government",
+        "url": "https://commonslibrary.parliament.uk/topic/social-policy/housing/",
+        "shortname": "Commons Lib"
+    },
+    {
+        "type": "standard",
         "path": "./scrapers/commons-hclg.py",
         "name": "Commons - Housing Select Committee",
         "category": "Government",
@@ -7,6 +16,7 @@
         "shortname": "C-HSC"
     },
     {
+        "type": "standard",
         "path": "./scrapers/nhf.py",
         "name": "National Housing Federation",
         "category": "Advocacy Group",
@@ -14,6 +24,7 @@
         "shortname": "NHF"
     },
     {
+        "type": "standard",
         "path": "./scrapers/cih.py",
         "name": "CIH",
         "url": "https://www.cih.org/news/",
@@ -21,6 +32,7 @@
         "shortname": "CIH"
     },
     {
+        "type": "standard",
         "path": "./scrapers/shelter.py",
         "name": "Shelter",
         "category": "Charity / Think Tank",
@@ -28,6 +40,7 @@
         "shortname": "Shelter"
     },
     {
+        "type": "standard",
         "path": "./scrapers/lga.py",
         "name": "LGA",
         "url": "https://www.local.gov.uk/about/news",
@@ -35,6 +48,7 @@
         "shortname": "LGA"
     },
     {
+        "type": "standard",
         "path": "./scrapers/c4l.py",
         "name": "Centre for London",
         "category": "Charity / Think Tank",
@@ -42,6 +56,7 @@
         "shortname": "C4L"
     },
     {
+        "type": "standard",
         "path": "./scrapers/lc.py",
         "name": "London Councils",
         "category": "Advocacy Group",
@@ -49,6 +64,7 @@
         "shortname": "LC"
     },
     {
+        "type": "standard",
         "path": "./scrapers/t4l.py",
         "name": "Trust for London",
         "category": "Charity / Think Tank",
@@ -56,6 +72,7 @@
         "shortname": "LC"
     },
     {
+        "type": "standard",
         "path": "./scrapers/mj.py",
         "name": "The MJ",
         "url": "https://www.themj.co.uk/tag/housing",
@@ -63,6 +80,7 @@
         "category": "News"
     },
     {
+        "type": "standard",
         "path": "./scrapers/c4c.py",
         "name": "Centre for Cities",
         "category": "Charity / Think Tank",
@@ -70,6 +88,7 @@
         "shortname": "C4C"
     },
     {
+        "type": "standard",
         "path": "./scrapers/c4l.py",
         "name": "Centre for London",
         "category": "Charity / Think Tank",
@@ -77,6 +96,7 @@
         "shortname": "C4L"
     },
     {
+        "type": "standard",
         "path": "./scrapers/ih.py",
         "name": "Inside Housing (Regulation)",
         "category": "News",
@@ -84,6 +104,7 @@
         "shortname": "IH"
     },
     {
+        "type": "standard",
         "path": "./scrapers/g15.py",
         "name": "G15",
         "category": "Advocacy Group",
@@ -91,6 +112,7 @@
         "shortname": "G15"
     },
     {
+        "type": "standard",
         "path": "./scrapers/homelesslink.py",
         "name": "Homeless Link",
         "category": "Charity / Think Tank",
@@ -98,6 +120,7 @@
         "shortname": "HL"
     },
     {
+        "type": "standard",
         "path": "./scrapers/crisis.py",
         "name": "Crisis",
         "category": "Charity / Think Tank",
@@ -105,6 +128,7 @@
         "shortname": "Crisis"
     },
     {
+        "type": "standard",
         "path": "./scrapers/lgsco.py",
         "name": "Local Gov & Social Care Ombudsman",
         "category": "Regulation",
@@ -112,6 +136,7 @@
         "shortname": "LGSCO"
     },
     {
+        "type": "standard",
         "path": "./scrapers/ukcche.py",
         "name": "UK Collaborative Centre for Housing Evidence",
         "category": "Charity / Think Tank",
@@ -119,6 +144,7 @@
         "shortname": "UKCCHE"
     },
     {
+        "type": "standard",
         "path": "./scrapers/guardian.py",
         "name": "Guardian - Social Housing",
         "category": "News",
@@ -126,6 +152,7 @@
         "shortname": "Guardian"
     },
     {
+        "type": "standard",
         "path": "./scrapers/centrehomelessnessimpact.py",
         "name": "Centre for Homelessness Impact",
         "category": "Charity / Think Tank",
@@ -133,6 +160,7 @@
         "shortname": "CHI"
     },
     {
+        "type": "standard",
         "path": "./scrapers/resolutionfoundation.py",
         "name": "Resolution Foundation",
         "category": "Charity / Think Tank",
