@@ -293,6 +293,23 @@ label {
 #sourceselection label {
     font-size: 0.65em;
 }
+
+#tutorial h3 {
+    margin-bottom: 3px;
+    margin-top: 5px;
+}
+#tutorial, #tutorial td {
+    font-size: 0.8em;
+    text-align: right;
+    padding-left: 10px;
+}
+.button {
+    cursor: pointer;
+}
+.arrow {
+    font-size: 0.8em;
+}
+
 #wrapper {
     max-height: 95vh;
     max-width: 100vw;

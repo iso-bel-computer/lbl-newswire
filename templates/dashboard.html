@@ -36,7 +36,6 @@
                     <label for='displayPinnedOnly'>Show pinned only</label>
                     <input type='checkbox' name='displayPinnedOnly' id='displayPinnedOnly'>
                 </div>
-                <button id="exportWord">Export to Word</button>
                 <hr>
                 <div>
                     <label for='showHideAll'>Show / Hide all?</label>
@@ -56,6 +55,21 @@
                         </tr>
                     {% endfor %}
                         </table>
+                </div>
+                <hr>
+                <div id='tutorial'>
+                    <h3 class='button'>Controls <span class='arrow'>◀</span></h3>
+                    <div class='buttoncontent' hidden>
+                        <table>
+                            <tr><td>Navigate</td><td>Tab / ↑↓</td></tr>
+                            <tr><td>Open article</td><td>&crarr;</td></tr>
+                            <tr><td>Hide / Unhide article</td><td>H</td></tr>
+                            <tr><td>Pin article</td><td>P</td></tr>
+                            <tr><td>Share article</td><td>S</td></tr>
+                            <tr><td>Add notes on article</td><td>N</td></tr>
+                            <tr><td>Exit notes</td><td>Esc</td></tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             <div id='tableContainer'>
@@ -371,8 +385,8 @@
                                 neighbour.focus()
                             }
                             break
-                        case "m":
-                        case "M":
+                        case "s":
+                        case "S":
                             e.preventDefault()
                             e.target.querySelector('.mail').click()
                             break
@@ -437,6 +451,21 @@
                 else delete articleNoteList[id]   // don't keep empty notes
                 localStorage.setItem('articleNoteList', JSON.stringify(articleNoteList))
             }
+
+
+            /////////////////////
+            // Folding buttons //
+            /////////////////////
+
+            document.querySelectorAll('.button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling
+                    const arrow = button.querySelector('.arrow')
+                    arrow.innerText = content.hidden ? '▼' : '◀'
+                    content.hidden = !content.hidden
+                })
+            })
+
             </script>
         </div>
     </body>

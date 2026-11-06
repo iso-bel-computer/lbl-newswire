@@ -13,7 +13,6 @@ def scrape(page, scraper):
     items = main.find_all('li')
 
     for item in items:
-        print(item)
 
         itemData = {
             "title": item.find('h3').text,

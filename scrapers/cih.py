@@ -19,7 +19,7 @@ def scrape(page, scraper):
             itemData = {
                 "title": header,
                 "description": description,
-                "url": link,
+                "url": 'https://cih.org' + link,
                 "source": scraper["name"],
                 "category": scraper['category'],
                 "date": date

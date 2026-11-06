@@ -131,5 +131,12 @@
         "category": "Charity / Think Tank",
         "url": "https://www.homelessnessimpact.org/blog",
         "shortname": "CHI"
+    },
+    {
+        "path": "./scrapers/resolutionfoundation.py",
+        "name": "Resolution Foundation",
+        "category": "Charity / Think Tank",
+        "url": "https://www.resolutionfoundation.org/publications/",
+        "shortname": "RF"
     }
 ]
