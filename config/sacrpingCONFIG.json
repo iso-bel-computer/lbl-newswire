@@ -4,16 +4,32 @@
         "path": "./scrapers/commons-library.py",
         "name": "Commons Library - Housing",
         "category": "Government",
-        "url": "https://commonslibrary.parliament.uk/topic/social-policy/housing/",
+        "url": "https://commonslibrary.parliament.uk/topic/social-policy/housing",
         "shortname": "Commons Lib"
     },
     {
-        "type": "standard",
+        "type": "selenium",
         "path": "./scrapers/commons-hclg.py",
         "name": "Commons - Housing Select Committee",
         "category": "Government",
-        "url": "https://committees.parliament.uk/committee/17/housing-communities-and-local-government-committee/news/",
+        "url": "https://committees.parliament.uk/committee/17/levelling-up-housing-and-communities-committee/",
         "shortname": "C-HSC"
+    },
+    {
+        "type": "standard",
+        "path": "./scrapers/nef.py",
+        "name": "New Economics Foundation",
+        "category": "Charity / Think Tank",
+        "url": "https://neweconomics.org/section/publications/housing-and-land",
+        "shortname": "NEF"
+    },
+    {
+        "type": "standard",
+        "path": "./scrapers/h-lin.py",
+        "name": "Housing LIN",
+        "category": "Advocacy Group",
+        "url": "https://www.housinglin.org.uk/Topics/type/",
+        "shortname": "H-LIN"
     },
     {
         "type": "standard",

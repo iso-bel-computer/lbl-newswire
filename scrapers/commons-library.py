@@ -11,7 +11,6 @@ def scrape(page, scraper):
     items = soup.find_all('article')
 
     for item in items:
-        print(item)
 
         title = item.find('h2')
         if not title:

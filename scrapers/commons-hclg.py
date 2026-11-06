@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
-#!/usr/bin/env python3
-
 from bs4 import BeautifulSoup
 import json
 
 def scrape(page, scraper):
 
-    soup = BeautifulSoup(page.text, 'html.parser')
+    soup = BeautifulSoup(page, 'html.parser')
     articles = []
 
     items = soup.find_all(class_='card-news')
