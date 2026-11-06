@@ -115,8 +115,8 @@ table {
 
 td.article {
     padding-left: 15px;
-    max-width: 50vw;
-    min-width: 50vw;
+    max-width: 45vw;
+    min-width: 45vw;
     overflow: hidden;
     border-left: 1px dotted black;
 }
@@ -130,8 +130,8 @@ td.article p {
 
 td.notes {
 
-    max-width: 10vw;
-    min-width: 10vw;
+    max-width: 15vw;
+    min-width: 15vw;
 }
 
 td.notes textarea {
