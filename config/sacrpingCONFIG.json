@@ -214,5 +214,13 @@
         "category": "Advocacy Group",
         "url": "https://www.nrla.org.uk/news",
         "shortname": "NRLA"
+    },
+    {
+        "type": "standard",
+        "path": "./scrapers/genrent.py",
+        "name": "Generation Rent",
+        "category": "Charity / Think Tank",
+        "url": "https://www.generationrent.org/news/",
+        "shortname": "GR"
     }
 ]

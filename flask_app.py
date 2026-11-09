@@ -94,7 +94,9 @@ def returnIcon(name):
                 "New Economics Foundation": "/static/icons/nef.png",
                 "Joseph Rowntree Foundation": "/static/icons/jrf.png",
                 "NRLA": "/static/icons/nrla.png",
-                "Savills": "/static/icons/savills.svg",
+                "Savills - Affordable Housing": "/static/icons/savills.svg",
+                "Savills - PRS": "/static/icons/savills.svg",
+                "Generation Rent": "/static/icons/genrent.png",
 
         }
         if icons.get(name):
