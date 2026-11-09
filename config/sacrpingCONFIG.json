@@ -230,5 +230,13 @@
         "category": "Charity / Think Tank",
         "url": "https://www.generationrent.org/news/",
         "shortname": "GR"
+    },
+    {
+        "type": "standard",
+        "path": "./scrapers/commonweal.py",
+        "name": "Commonweal Housing",
+        "category": "Charity / Think Tank",
+        "url": "https://www.commonwealhousing.org.uk/news",
+        "shortname": "CH"
     }
 ]

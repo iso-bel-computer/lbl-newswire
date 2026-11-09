@@ -98,6 +98,7 @@ def returnIcon(name):
                 "Savills - Affordable Housing": "/static/icons/savills.svg",
                 "Savills - PRS": "/static/icons/savills.svg",
                 "Generation Rent": "/static/icons/genrent.png",
+                "Commonweal Housing": "/static/icons/commonweal.png",
 
         }
         if icons.get(name):
