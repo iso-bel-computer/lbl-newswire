@@ -54,6 +54,9 @@ def scrapeWebsites(log):
 
                 scrapedArticles.extend(articles)
 
+                if len(articles) < 1:
+                    raise Exception(f"No articles found for {scraper['name']}")
+
             except Exception as e:
 
                 log[scraper['name']] = {
