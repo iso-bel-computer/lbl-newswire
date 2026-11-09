@@ -14,7 +14,7 @@ def scrape(page, scraper):
         itemData = {
 
             "title": soup.find("h3").text.strip(),
-            "url": soup.find('a')['href'],
+            "url": 'https://www.jrf.org.uk' + soup.find('a')['href'],
             "category": scraper['category'],
             "date": soup.find('time').text.strip(),
             "description": soup.find('p').text.strip(),
