@@ -210,9 +210,17 @@
     {
         "type": "standard",
         "path": "./scrapers/nrla.py",
-        "name": "NRLA",
+        "name": "NRLA - Campaigns",
         "category": "Advocacy Group",
-        "url": "https://www.nrla.org.uk/news",
+        "url": "https://www.nrla.org.uk/news?category=Campaigns&page=1",
+        "shortname": "NRLA"
+    },
+    {
+        "type": "standard",
+        "path": "./scrapers/nrla.py",
+        "name": "NRLA - Research",
+        "category": "Advocacy Group",
+        "url": "https://www.nrla.org.uk/news?category=Research&page=1",
         "shortname": "NRLA"
     },
     {
