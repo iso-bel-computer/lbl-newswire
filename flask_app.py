@@ -89,9 +89,12 @@ def returnIcon(name):
                 "Centre for Homelessness Impact": "/static/icons/centreforhomelessnessimpact.png",
                 "Resolution Foundation": "/static/icons/ResolutionFoundation.png",
                 "Commons Library - Housing": "/static/icons/commons.png",
+                "Commons - Housing Select Committee": "/static/icons/commons.png",
                 "Housing LIN": "/static/icons/housinglin.png",
                 "New Economics Foundation": "/static/icons/nef.png",
                 "Joseph Rowntree Foundation": "/static/icons/jrf.png",
+                "NRLA": "/static/icons/nrla.png",
+                "Savills": "/static/icons/savills.svg",
 
         }
         if icons.get(name):

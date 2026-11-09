@@ -9,6 +9,22 @@
     },
     {
         "type": "selenium",
+        "path": "./scrapers/savills.py",
+        "name": "Savills - Affordable Housing",
+        "category": "Advocacy Group",
+        "url": "https://www.savills.co.uk/insight-and-opinion/research.aspx?rc=United-Kingdom&p=Affordable-Housing&t=&f=date&q=&page=1",
+        "shortname": "Savills AH"
+    },
+    {
+        "type": "selenium",
+        "path": "./scrapers/savills.py",
+        "name": "Savills - PRS",
+        "category": "Advocacy Group",
+        "url": "https://www.savills.co.uk/insight-and-opinion/research.aspx?rc=United-Kingdom&p=Residential-Lettings&t=&f=date&q=&page=1",
+        "shortname": "Savills"
+    },
+    {
+        "type": "selenium",
         "path": "./scrapers/commons-hclg.py",
         "name": "Commons - Housing Select Committee",
         "category": "Government",
@@ -20,7 +36,7 @@
         "path": "./scrapers/jrf.py",
         "name": "Joseph Rowntree Foundation",
         "category": "Charity / Think Tank",
-        "url": "https://www.jrf.org.uk/api/listing/29740",
+        "url": "https://www.jrf.org.uk/api/listing/29740?sort%5Bsearch_api_relevance%5D%5Bpath%5D=search_api_relevance&sort%5Bsearch_api_relevance%5D%5Bdirection%5D=desc&sort%5Bpage_publish_date%5D%5Bpath%5D=page_publish_date&sort%5Bpage_publish_date%5D%5Bdirection%5D=desc",
         "shortname": "JRF"
     },
     {
@@ -190,5 +206,13 @@
         "category": "Charity / Think Tank",
         "url": "https://www.resolutionfoundation.org/publications/",
         "shortname": "RF"
+    },
+    {
+        "type": "standard",
+        "path": "./scrapers/nrla.py",
+        "name": "NRLA",
+        "category": "Advocacy Group",
+        "url": "https://www.nrla.org.uk/news",
+        "shortname": "NRLA"
     }
 ]
